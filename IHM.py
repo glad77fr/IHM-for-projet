@@ -1,6 +1,7 @@
 from tkinter import filedialog
 from tkinter import *
 from tkinter import messagebox
+#from tkinter.filedialog import *
 import tkinter
 import pandas as pd
 
@@ -59,17 +60,26 @@ class Application(Tk):
         self.rep_cible = filedialog.askdirectory()
         self.rep_cible_affiche.set(self.rep_cible)
 
+
     def ex_programme(self):
 
         if self.rep_source_affiche.get() == "":
             messagebox.showerror("Ficher source non sélectionné", "Veuillez sélectionner un fichier source")
 
-
         if self.rep_cible_affiche.get() =="":
             messagebox.showerror("Répertoire source non sélectionné", "Veuillez sélectionner un répertoire source")
 
         if self.rep_source_affiche.get() != "" and self.rep_cible_affiche.get() != "":
-            print("ok")
+            colonnes=[]
+            colonnes = self.source.columns
+            print(colonnes)
+            colonnes = list(colonnes)
+            colonnes = str(colonnes)
+            colonnes = colonnes[1:-1]
+            print(colonnes)
+            #colonnes = colonnes[7:-16]
+            #print(list)
+            messagebox.showinfo(title="Info colonnes", message="Les colonnes du fichier exporté sont: " + colonnes)
 
 toto = Application(None)
 toto.mainloop()
