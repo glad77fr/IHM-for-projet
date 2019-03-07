@@ -60,7 +60,6 @@ class Application(Tk):
         self.rep_cible = filedialog.askdirectory()
         self.rep_cible_affiche.set(self.rep_cible)
 
-
     def ex_programme(self):
 
         if self.rep_source_affiche.get() == "":
