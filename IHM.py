@@ -4,6 +4,7 @@ from tkinter import messagebox
 #from tkinter.filedialog import *
 import tkinter
 import pandas as pd
+import json
 
 class Application(Tk):
 
@@ -13,6 +14,7 @@ class Application(Tk):
         self.initialize()
         self.title("Transformation de données")
         self.resizable(width=False, height=False)
+        self.load_data()
         self.mainloop()
 
     def initialize(self):
@@ -59,11 +61,29 @@ class Application(Tk):
         if rep != "":
             self.rep_source_affiche.set(rep)
             self.source = pd.read_excel(rep)
+            try:
+                self.save_data["source"] = rep
+                with open('data.txt', 'w+') as outfile:
+                    json.dump(self.save_data, outfile)
+            except:
+                self.save_data.update({"Source": rep})
+                with open('data.txt', 'w+') as outfile:
+                    json.dump(self.save_data, outfile)
 
     def rep_cible(self):
-        self.rep_cible = filedialog.askdirectory()
-        self.rep_cible_affiche.set(self.rep_cible)
 
+        self.rep_cible = filedialog.askdirectory()
+        if self.rep_cible != "":
+            self.rep_cible_affiche.set(self.rep_cible)
+
+            try:
+                self.save_data["cible"] = self.rep_cible
+                with open('data.txt', 'w+') as outfile:
+                    json.dump(self.save_data, outfile)
+            except:
+                self.save_data.update({"Cible": self.rep_cible })
+                with open('data.txt', 'w+') as outfile:
+                    json.dump(self.save_data, outfile)
 
     def ex_programme(self):
 
@@ -85,6 +105,31 @@ class Application(Tk):
             #print(list)
             messagebox.showinfo(title="Info colonnes", message="Les colonnes du fichier exporté sont: " + colonnes)
 
+    def load_data(self):
+        try:
+            with open('data.txt') as json_file:
+                self.save_data = json.load(json_file)
+
+            try:
+                print(self.save_data["cible"])
+
+                self.rep_cible_affiche.set(self.save_data["cible"])
+
+            except:
+
+                pass
+
+            try:
+
+                self.rep_source_affiche.set(self.save_data["source"])
+
+            except:
+
+                pass
+
+        except:
+            print("nope")
+            self.save_data={}
 
 toto = Application(None)
 
