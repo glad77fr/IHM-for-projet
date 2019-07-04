@@ -11,7 +11,7 @@ class Application(Tk):
         Tk.__init__(self, parent)
         self.parent = parent
         self.initialize()
-        self.title = "Transformation de données"
+        self.title("Transformation de données")
         self.resizable(width=False, height=False)
         self.mainloop()
 
