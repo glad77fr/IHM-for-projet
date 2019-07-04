@@ -11,7 +11,7 @@ class Application(Tk):
         Tk.__init__(self, parent)
         self.parent = parent
         self.initialize()
-        self.title("Transformation de données")
+        self.title = "Transformation de données"
         self.resizable(width=False, height=False)
         self.mainloop()
 
@@ -50,11 +50,15 @@ class Application(Tk):
         self.ex_Button = Button(self.ex_menu, text="Executer", command = self.ex_programme,height = 1, width = 18)
         self.ex_Button.grid(row=3, column=1, padx=10, pady=10,sticky=W)
 
+        self.quitButton = Button(self.ex_menu, text="Quitter", command=self.destroy,height = 1, width = 18)
+        self.quitButton.grid(row=4, column=1, padx=10, pady=10,sticky=W)
+
     def import_file(self):
         rep = filedialog.askopenfilename(initialdir="/", title="Select file",
                                          filetypes=(("Excel files", "*.xlsx"), ("all files", "*.*")))
-        self.rep_source_affiche.set(rep)
-        self.source = pd.read_excel(rep)
+        if rep != "":
+            self.rep_source_affiche.set(rep)
+            self.source = pd.read_excel(rep)
 
     def rep_cible(self):
         self.rep_cible = filedialog.askdirectory()
@@ -81,5 +85,7 @@ class Application(Tk):
             #print(list)
             messagebox.showinfo(title="Info colonnes", message="Les colonnes du fichier exporté sont: " + colonnes)
 
+
 toto = Application(None)
+
 toto.mainloop()
